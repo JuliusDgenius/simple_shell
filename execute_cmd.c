@@ -7,6 +7,7 @@
 void execute_cmd(char **argv)
 {
 	char *cmd = NULL, *real_cmd = NULL;
+	pid_t pid;
 
 	if (argv)
 	{
@@ -17,9 +18,13 @@ void execute_cmd(char **argv)
 		real_cmd = get_path(cmd);
 
 		/* execute using execve */
-		if (execve(real_cmd, argv, NULL) == -1)
+		pid = fork();
+		if (pid == 0)
 		{
-			perror("Error:");
+			if (execve(real_cmd, argv, NULL) == -1)
+			{
+				perror("Error:");
+			}
 		}
 	}
 }
