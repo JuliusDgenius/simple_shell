@@ -1,14 +1,20 @@
 #include "main.h"
 
+/**
+ * get_path - gets the path to the command executable
+ * @cmd: the command whose path to get
+ *
+ * Return: Returns the path to command
+ */
 char *get_path(char *cmd)
 {
-	char *path,*path_cpy, *path_token, *file_path; /* declare variable to store path and copy of it */
+	char *path, *path_cpy, *path_token, *file_path; /* declare variables */
 	int cmd_len, dir_len;
 	struct stat buffer;
 
 	/* get the value of the PATH environ variable and store in path */
 	path = getenv("PATH");
-	
+
 	if (path)
 	{
 		path_cpy = strdup(path); /* make a copy due to strtok side effect */
@@ -29,9 +35,7 @@ char *get_path(char *cmd)
 			strcat(file_path, cmd);
 			strcat(file_path, "\0");
 
-			/** - stat returns 0 if successful and file path exist
-	 		* we also free allocated memory before retruning the path
-	 		*/
+			/** - stat returns 0 if file path exists and we free allocated memory */
 			if (stat(file_path, &buffer) == 0)
 			{
 				free(path_cpy);
