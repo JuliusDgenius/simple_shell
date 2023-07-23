@@ -4,6 +4,12 @@
 #include <string.h>
 #include "main.h"
 
+/**
+ * execute_cmd - executes the command passsed to the shell
+ * @argv: An array of NULL terminated strings containing all args passed to the shell
+ *
+ * Return: Nothing
+ */ 
 void execute_cmd(char **argv)
 {
 	char *cmd = NULL, *real_cmd = NULL;
