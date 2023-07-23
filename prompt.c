@@ -13,18 +13,16 @@
 int main(int argc, char **argv)
 {
 	char *prompt = "myShell$ "; /* prompt variable to hold the prompt */
-	char *cmd = NULL, *cmd_cpy = NULL; /* the buffer to store the strs returned by getline */
+	char *cmd = NULL, *cmd_cpy = NULL, *token; /* buffer to store ccommand*/
 	size_t size_buf = 0; /* size of the buffer */
 	ssize_t ret_val_getline; /* return value of getline */
 	const char *delim = " \n"; /* delimiter for parsing */
-	char *token; /* variable to store tokens */
-	int num_tokens = 0; /* number of tokens */
-	int i; /* iterator */
+	int num_tokens = 0, i; /* number of tokens */
 
 	(void)argc;
 	/* create an infinite loop to return to shell after executing */
-	while (1) 
-	{	
+	while (1)
+	{
 		printf("%s ", prompt); /* print a prompt */
 		/* read and grab user input from stdin */
 		ret_val_getline = getline(&cmd, &size_buf, stdin);
@@ -34,7 +32,7 @@ int main(int argc, char **argv)
 			printf("Exited shell...\n");
 			return (-1);
 		}
-	
+
 
 		/* allocate memory dynamically for the copy of lineptr */
 		cmd_cpy = malloc(sizeof(char) * ret_val_getline);
@@ -61,7 +59,7 @@ int main(int argc, char **argv)
 
 		token = strtok(cmd_cpy, delim); /* get first token */
 
-		for (i =0; token != NULL; i++)
+		for (i = 0; token != NULL; i++)
 		{
 			argv[i] = malloc(sizeof(char) * strlen(token));
 			strcpy(argv[i], token); /* store token in array */
@@ -71,10 +69,10 @@ int main(int argc, char **argv)
 		argv[i] = NULL; /* add the NULL terminating character to arr*/
 
 		/* execute the command */
-		execute_cmd(argv);		
+		execute_cmd(argv);
 	}
-		
-	
+
+
 	/* free all memory */
 	free(cmd);
 	free(cmd_cpy);
