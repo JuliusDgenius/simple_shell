@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "main.h"
 
 /**
@@ -32,5 +34,6 @@ void execute_cmd(char **argv)
 				perror("Error:");
 			}
 		}
+		wait(NULL);
 	}
 }
