@@ -14,5 +14,14 @@ int main(void)
 
 	cmd_cpy = strdup(cmd);
 
+	while (cmd[i])
+	{
+		if (cmd[i] == '\n')
+			printf("\\n --> Input character is %ld ", strlen(cmd));
+		else
+			printf("%c", cmd[i]);
+		i++;
+	}
+
 	return 0;
 }
