@@ -8,7 +8,7 @@
 
 /**
  * execute_cmd - executes the command passsed to the shell
- * @argv: An array of NULL terminated strings containing all args passed to the shell
+ * @argv: An array of NULL terminated arg strings to the shell
  *
  * Return: Nothing
  */
