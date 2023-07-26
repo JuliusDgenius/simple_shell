@@ -10,5 +10,7 @@
 
 void execute_cmd(char **argv);
 char *get_path(char *cmd);
+void prompt(void);
+void prompt2(void);
 
 #endif
