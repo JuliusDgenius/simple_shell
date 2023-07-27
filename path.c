@@ -68,8 +68,10 @@ char *find_path(char **env)
  */
 void check_for_path(vars_t *vars)
 {
-	char *path, *path_dup = NULL, *check = NULL, unsigned int i = 0, r = 0;
-	char **path_tokens, struct stat buf;
+	char *path, *path_dup = NULL, *check = NULL;
+	unsigned int i = 0, r = 0;
+	char **path_tokens;
+	struct stat buf;
 
 	if (check_for_dir(vars->av[0]))
 	{
