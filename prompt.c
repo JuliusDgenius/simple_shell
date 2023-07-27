@@ -1,18 +1,23 @@
 #include <stdio.h>
-#include "main.h"
+#include "shell.h"
 
 /**
- * prompt - function to print ptompt
- * prompt2 - function to print angle bracket prompt
+ * print_prompt1 - prints the shell prompt '$'
  *
- * Return: Nothing
+ * Return: void
  */
-void prompt()
+
+void print_prompt1(void)
 {
 	fprintf(stderr, "$ ");
 }
 
-void prompt2(void)
+/**
+ * print_prompt2 - prints the shell prompt '>'
+ *
+ * Return: Always 0.
+ */
+void print_prompt2(void)
 {
 	fprintf(stderr, "> ");
 }

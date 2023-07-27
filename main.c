@@ -1,86 +1,147 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "main.h"
+#include "shell.h"
+#include <errno.h>
+#include "source.h"
+#include "parser.h"
+#include "executor.h"
 
 /**
- * main - main function to print a prompt to thr terminal
+ * main - main writes our basic read, execute, print and loop
  * @argc: argument count
- * @argv: argument vectors
- *
- * Return: Nothing
+ * @argv: argument variables
+ * Return: 0 on success
  */
+
 int main(int argc, char **argv)
 {
-	/* buffer to store ccommand*/
-	char *cmd = NULL, *cmd_cpy = NULL, *token;
-	size_t size_buf = 0; /* size of the buffer */
-	ssize_t ret_val_getline; /* return value of getline */
-	const char *delim = " \n"; /* delimiter for parsing */
-	int num_tokens = 0, i; /* number of tokens */
+	char *cmd;
 
-	(void)argc;
-	/* create an infinite loop to return to shell after executing */
-	while (1)
-	{
-		/* print a prompt */
-		prompt();
-		/* read and grab user input from stdin */
-		ret_val_getline = getline(&cmd, &size_buf, stdin);
-		/* check if EOF is reached or getline failed */
-		if (ret_val_getline == -1)
+	do {
+		print_prompt1();
+
+		cmd = read_cmd();
+
+		if (!cmd)
 		{
-			printf("Exited shell...\n");
-			return (-1);
+			exit(EXIT_SUCCESS);
 		}
+
+		if (cmd[0] == '\0' || strcmp(cmd, "\n") == 0)
+		{
+			free(cmd);
+			continue;
+		}
+
 		if (strcmp(cmd, "exit\n") == 0)
+		{
+			free(cmd);
+			break;
+		}
+
+		struct source_s src;
+		src.buffer = cmd;
+		src.bufsize = strlen(cmd);
+		src.curpos = INIT_SRC_POS;
+		parse_and_execute(&src);
+
+		free(cmd);
+} while (1);
+
+	exit(EXIT_SUCCESS);
+}
+
+/**
+ * read_cmd - reads input from stdin
+ *
+ * Return: return pointer to command
+ */
+char *read_cmd()
+{
+	char buf[1024];
+	char *ptr = NULL;
+	char ptrlen = 0;
+
+	while (fgets(buf, 1024, stdin))
+	{
+		int buflen = strlen(buf);
+
+		if (!ptr)
+		{
+			ptr = malloc(buflen + 1);
+		}
+		else
+		{
+			char *ptr2 = realloc(ptr, ptrlen + buflen + 1);
+
+			if (ptr2)
+			{
+				ptr = ptr2;
+			}
+			else
+			{
+				free(ptr);
+				ptr = NULL;
+			}
+		}
+		if (!ptr)
+		{
+			fprintf(stderr, "error: failed to alloc buffer: %s\n",
+			strerror(errno));
+			return (NULL);
+		}
+
+		strcpy(ptr + ptrlen, buf);
+
+		if (buf[buflen - 1] == '\n')
+		{
+			if (buflen == 1 || buf[buflen - 2] != '\\')
+			{
+				return (ptr);
+			}
+
+			ptr[ptrlen + buflen - 2] = '\0';
+			buflen -= 2;
+			print_prompt2();
+		}
+
+		ptrlen += buflen;
+	}
+
+			return (ptr);
+	}
+
+/**
+ * parse_and_execute - parses and executes simple commands
+ * @src: input source
+ *
+ * Return: 1 on success
+ */
+int parse_and_execute(struct source_s *src)
+{
+	skip_white_spaces(src);
+
+	struct token_s *tok = tokenize(src);
+
+	if (tok == &eof_token)
+	{
+		return (0);
+	}
+
+	while (tok && tok != &eof_token)
+	{
+		struct node_s *cmd = parse_simple_command(tok);
+
+		if (!cmd)
 		{
 			break;
 		}
 
-		/* allocate memory dynamically for the copy of lineptr */
-		cmd_cpy = malloc(sizeof(char) * ret_val_getline);
-		if (cmd_cpy == NULL)
-		{
-			perror("sh: memory allocation error");
-			return (-1);
-		}
-
-		strcpy(cmd_cpy, cmd); /* make a copy of the strings */
-
-		/* get tokens and arg count */
-		token = strtok(cmd, delim); /* get the first token */
-		/* loop to get other tokens and count the number of tokens */
-		while (token != NULL)
-		{
-			num_tokens++;
-			token = strtok(NULL, delim);
-		}
-		num_tokens++;
-
-		/* allocate memory for the tokens from strtok */
-		argv = malloc(sizeof(char *) * num_tokens);
-
-		token = strtok(cmd_cpy, delim); /* get first token */
-
-		for (i = 0; token != NULL; i++)
-		{
-			argv[i] = malloc(sizeof(char) * strlen(token));
-			strcpy(argv[i], token); /* store token in array */
-
-			token = strtok(NULL, delim);
-		}
-		argv[i] = NULL; /* add the NULL terminating character to arr*/
-
-		/* execute the command */
-		execute_cmd(argv);
+		do_simple_command(cmd);
+		free_node_tree(cmd);
+		tok = tokenize(src);
 	}
 
-
-	/* free all memory */
-	free(cmd);
-	free(cmd_cpy);
-
-	return (0);
+	return (1);
 }
-
