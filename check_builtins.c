@@ -102,7 +102,7 @@ void new_setenv(vars_t *vars)
 			print_error(vars, NULL);
 			free(vars->buffer);
 
-			ree(vars->commands);
+			free(vars->commands);
 			free(vars->av);
 			free_env(vars->env);
 			exit(127);
