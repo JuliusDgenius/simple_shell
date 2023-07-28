@@ -1,7 +1,7 @@
 #include "shell.h"
 /**
- * path_execute - path to executable
- * @command: represents path to the command passed
+ * path_execute - The path to executable
+ * @command: This represents path to the command passed
  * @vars: A pointer to structure of variables
  *
  * Return: 0 on success, 1 on failure

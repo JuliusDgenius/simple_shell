@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _puts - writes strings to STDOUT
+ * _puts - This writes strings to STDOUT
  * @str: the string to write to stdout
  *
  * Return: returns number of chars written to stdout or -1 on failure

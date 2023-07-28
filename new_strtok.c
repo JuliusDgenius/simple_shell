@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * check_match - fxn to check if a char matches any in a string
+ * check_match - This fxn checks if a char matches any in a string
  * @c: Given character to check for
  * @str: the string to check character in
  *

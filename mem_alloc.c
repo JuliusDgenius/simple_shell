@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _realloc - function to realloc a pointer to extent memory space
+ * _realloc - The function to realloc a pointer to extent memory space
  * @ptr: pointer to the initial memory space
  * @size: A ptr to the number of elements in initial array
  *
