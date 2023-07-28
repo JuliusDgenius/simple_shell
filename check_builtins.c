@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
- * check_for_builtins - checks if the command is a builtin
- * @vars: variables
- * Return: pointer to the function or NULL
+ * check_for_builtins - fxn checks whether the cmd is a builtin
+ * @vars: A struct pointer to the command
+ * Return: returns void
  */
 void (*check_for_builtins(vars_t *vars))(vars_t *vars)
 {
@@ -27,8 +27,8 @@ void (*check_for_builtins(vars_t *vars))(vars_t *vars)
 }
 
 /**
- * new_exit - exit program
- * @vars: variables
+ * new_exit - Handle exit when cmd is the str "exit"
+ * @vars: A pointer to struct
  * Return: void
  */
 void new_exit(vars_t *vars)
@@ -58,7 +58,7 @@ void new_exit(vars_t *vars)
 }
 
 /**
- * _env - prints the current environment
+ * _env - function to prints the current environment
  * @vars: struct of variables
  * Return: void.
  */
@@ -75,8 +75,8 @@ void _env(vars_t *vars)
 }
 
 /**
- * new_setenv - create a new environment variable, or edit an existing variable
- * @vars: pointer to struct of variables
+ * new_setenv - creates anew environ var, or edits an existing var
+ * @vars: pointer to struct of var
  *
  * Return: void
  */
@@ -114,8 +114,8 @@ void new_setenv(vars_t *vars)
 }
 
 /**
- * new_unsetenv - remove an environment variable
- * @vars: pointer to a struct of variables
+ * new_unsetenv - remove an environment var
+ * @vars: pointer to a struct of var
  *
  * Return: void
  */
