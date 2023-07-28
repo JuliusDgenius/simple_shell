@@ -6,7 +6,6 @@
  *
  * Return: returns void
  */
-
 void print_prompt1(void)
 {
 	fprintf(stderr, "$ ");
@@ -15,7 +14,7 @@ void print_prompt1(void)
 /**
  * print_prompt2 - prints the shell prompt '>' for long entry
  *
- * Return: Always 0.
+ * Return: return 0 on succes.
  */
 void print_prompt2(void)
 {
