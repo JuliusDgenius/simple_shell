@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * sig_handler - handles ^C signal interupt
- * @uuv: unused variable (required for signal function prototype)
+ * sig_handler - function to handle ^C interrupt signal
+ * @uuv: required for signal function prototype but unused.
  *
- * Return: void
+ * Return: Returns nothing
  */
 static void sig_handler(int uuv)
 {
@@ -18,21 +18,21 @@ static void sig_handler(int uuv)
 }
 
 /**
- * main - main function for the shell
- * @argc: number of arguments passed to main
- * @argv: array of arguments passed to main
- * @environment: array of environment variables
+ * main - Entry function to the shell
+ * @argc: Argument count to main
+ * @argv: An array list of args passed to main
+ * @envp: Pointer to array of environment variables
  *
  * Return: 0 or exit status, or ?
  */
-int main(int argc __attribute__((unused)), char **argv, char **environment)
+int main(int argc __attribute__((unused)), char **argv, char **envp)
 {
 	size_t len_buffer = 0;
-	unsigned int is_pipe = 0, i;
+	unsigned int is_pipe = 0, i, sig_flag;
 	vars_t vars = {NULL, NULL, NULL, 0, NULL, 0, NULL};
 
 	vars.argv = argv;
-	vars.env = make_env(environment);
+	vars.env = make_env(envp);
 	signal(SIGINT, sig_handler);
 	if (!isatty(STDIN_FILENO))
 		is_pipe = 1;
