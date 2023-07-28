@@ -167,7 +167,7 @@ int execute_cwd(vars_t *vars)
 int check_for_dir(char *str)
 {
 	unsigned int i;
-	
+
 	for (i = 0; str[i]; i++)
 	{
 		if (str[i] == '/')
