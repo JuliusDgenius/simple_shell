@@ -84,7 +84,7 @@ void new_setenv(vars_t *vars)
 {
 	char **key;
 	char *var;
-	
+
 	if (vars->av[1] == NULL || vars->av[2] == NULL)
 	{
 		print_error(vars, ": Incorrect number of arguments\n");
