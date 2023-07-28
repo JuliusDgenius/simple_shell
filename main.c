@@ -7,10 +7,10 @@
  * Return: Returns nothing
  */
 
-unsigned int sig_flag = 0; /* Global variable */
-
 static void sig_handler(int uuv)
 {
+	unsigned int sig_flag = 0;
+
 	(void) uuv;
 
 	if (sig_flag == 0)
@@ -30,9 +30,10 @@ static void sig_handler(int uuv)
 int main(int argc __attribute__((unused)), char **argv, char **envp)
 {
 	size_t len_buffer = 0;
-	unsigned int is_pipe = 0, i;
+	unsigned int is_pipe = 0, i, sig_flag = 0;
 	vars_t vars = {NULL, NULL, NULL, 0, NULL, 0, NULL};
 
+	(void)sig_flag;
 	vars.argv = argv;
 	vars.env = make_env(envp);
 	signal(SIGINT, sig_handler);
