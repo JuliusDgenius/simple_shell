@@ -6,9 +6,11 @@
  *
  * Return: Returns nothing
  */
+
+unsigned int sig_flag = 0; /* Global variable */
+
 static void sig_handler(int uuv)
 {
-	unsigned int sig_flag;
 	(void) uuv;
 
 	if (sig_flag == 0)
@@ -28,7 +30,7 @@ static void sig_handler(int uuv)
 int main(int argc __attribute__((unused)), char **argv, char **envp)
 {
 	size_t len_buffer = 0;
-	unsigned int is_pipe = 0, i, sig_flag;
+	unsigned int is_pipe = 0, i;
 	vars_t vars = {NULL, NULL, NULL, 0, NULL, 0, NULL};
 
 	vars.argv = argv;
