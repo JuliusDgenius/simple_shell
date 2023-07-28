@@ -2,9 +2,9 @@
 #include "shell.h"
 
 /**
- * print_prompt1 - prints the shell prompt '$'
+ * print_prompt1 - Handle prompt at start of shell '$'
  *
- * Return: void
+ * Return: returns void
  */
 
 void print_prompt1(void)
@@ -13,7 +13,7 @@ void print_prompt1(void)
 }
 
 /**
- * print_prompt2 - prints the shell prompt '>'
+ * print_prompt2 - prints the shell prompt '>' for long entry
  *
  * Return: Always 0.
  */
